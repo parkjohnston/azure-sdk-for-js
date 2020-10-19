@@ -1,8 +1,8 @@
-import nodeResolve from "rollup-plugin-node-resolve";
+import cjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
+import nodeResolve from "@rollup/plugin-node-resolve";
+import inject from "@rollup/plugin-inject";
 import sourcemaps from "rollup-plugin-sourcemaps";
-import cjs from "rollup-plugin-commonjs";
-import inject from "rollup-plugin-inject";
-import json from "rollup-plugin-json";
 
 /**
  * @type {rollup.RollupFileOptions}
@@ -30,7 +30,7 @@ const config = {
   plugins: [
     nodeResolve({
       mainFields: ["module", "main"],
-      preferBuiltins: false 
+      preferBuiltins: false
     }),
     sourcemaps(),
     cjs({
