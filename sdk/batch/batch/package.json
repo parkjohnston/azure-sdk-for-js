@@ -68,7 +68,7 @@
     "tsconfig.json"
   ],
   "scripts": {
-    "build": "tsc && rollup -c rollup.config.js && npm run minify",
+    "build": "tsc -p . && rollup -c 2>&1 && npm run minify",
     "clean": "find src -type f -name \"*.js\" -delete",
     "minify": "uglifyjs -c -m --comments --source-map \"content='./dist/batch.js.map'\" -o ./dist/batch.min.js ./dist/batch.js",
     "prepack": "npm install && npm run build",

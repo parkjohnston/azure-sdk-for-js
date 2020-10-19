@@ -47,7 +47,18 @@ const config = {
     }),
 
     json()
-  ]
+  ],
+  onwarn: (warning) => {
+    if (
+      warning.code === "CIRCULAR_DEPENDENCY" &&
+      warning.importer.indexOf(path.normalize("node_modules/chai/lib") === 0)
+    ) {
+      // Chai contains circular references, but they are not fatal and can be ignored.
+      return;
+    }
+
+    console.error(`(!) ${warning.message}`);
+  }
 };
 
 export default config;
