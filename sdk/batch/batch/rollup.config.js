@@ -1,4 +1,3 @@
-import rollup from "rollup";
 import nodeResolve from "rollup-plugin-node-resolve";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import cjs from "rollup-plugin-commonjs";
@@ -29,12 +28,14 @@ const config = {
  */`
   },
   plugins: [
-    nodeResolve({ module: true, preferBuiltins: false }),
+    nodeResolve({
+      mainFields: ["module", "main"],
+      preferBuiltins: false 
+    }),
     sourcemaps(),
     cjs({
       namedExports: {
-        "url-parse": ["url"],
-        jssha: ["jssha"]
+        "url-parse": ["url"]
       }
     }),
     inject({

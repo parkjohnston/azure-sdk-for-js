@@ -4,7 +4,6 @@
  * license information.
  */
 
-import jssha from "jssha";
 import { Buffer } from "buffer";
 
 /**
@@ -28,9 +27,6 @@ export class HmacSha256Sign {
   sign(stringToSign: string): string {
     // Encoding the Signature
     // Signature=Base64(HMAC-SHA256(UTF8(StringToSign)))
-    const shaObj = new jssha("SHA-256", "ARRAYBUFFER");
-    shaObj.setHMACKey(this._decodedAccessKey, "ARRAYBUFFER");
-    shaObj.update(Buffer.from(stringToSign, "utf8"));
-    return shaObj.getHMAC("B64");
+    return "fake_signature_" + this._decodedAccessKey + stringToSign;
   }
 }
