@@ -44,6 +44,8 @@ jobs:
         value: "@{ storageEndpointSuffix = 'core.usgovcloudapi.net'; cognitiveServicesEndpointSuffix = 'cognitiveservices.azure.us'; searchSku = 'basic' }"
       - name: AzureChinaCloudArmTemplateParameters
         value: "@{ storageEndpointSuffix = 'core.chinacloudapi.cn'; cognitiveServicesEndpointSuffix = 'cognitiveservices.azure.cn'; searchSku = 'basic' }"
+      - name: AzPowershellVersion
+        value: "4.8.0"
 
     steps:
       - template: ../../eng/pipelines/templates/steps/common.yml
@@ -58,7 +60,17 @@ jobs:
         displayName: Install dev-tool
 
       # New-TestResources command requires Az module
-      - pwsh: Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force -Verbose
+      - pwsh: |
+          if (!(Get-Module -Name Az -ListAvailable | Where-Object {$_.Version -eq $(AzPowershellVersion)})) {
+            Install-Module `
+                -Name Az `
+                -Scope CurrentUser `
+                -AllowClobber `
+                -Force `
+                -Verbose `
+                -MinimumVersion $(AzPowershellVersion) `
+                -MaximumVersion $(AzPowershellVersion)
+          }
         displayName: Install Azure PowerShell module
 
       - pwsh: |
